@@ -7,10 +7,28 @@ require("dotenv").config();
 
 var input = process.argv.slice(2);
 
-// console.log(input[0]); test to make sure command part of input is being read right
+// ~ ~ ~ ~ ~ ~ ~ ~ switch-case for calling functions based on user input: ~ ~ ~ ~ ~ ~
+switch(input[0]) {
+    case "movie-this":
+        searchOMDb();
+        break;
+    case "concert-this":
+        console.log("I'm afraid I can't do that.... yet.")
+        break;
+    case "spotify-this-song":
+        console.log("I'm afraid I can't do that.... yet.")
+        break;
+    case "do-what-it-says":
+        console.log("I'm afraid I can't do that.... yet.")
+        break;
+    default:
+      console.log("Please enter a command....")
+}
+// ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~   
 
-if (input[0] === "movie-this") {
+//===================== function definitions: =====================================
 
+function searchOMDb() {
     // vars to build url string for axios:
     var movieTitle = "";
     var OMDBkey = process.env.OMDB_key;
@@ -25,7 +43,14 @@ if (input[0] === "movie-this") {
 
     //axios request:
     axios.get("http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=" + OMDBkey).then(
-        function(response) { //block of console logs with strings formatted for readability(in the terminal, anyway)
+        function(response) { 
+            
+            /* if (error) {
+                console.log("Sorry, we don't know that movie! Are you sure you're spelling it right?");   
+                return;
+            } */
+
+            //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
             console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
             console.log("Title: " + response.data.Title);
             console.log("Release year: " + response.data.Year);
@@ -36,8 +61,9 @@ if (input[0] === "movie-this") {
             console.log("Plot synopsis: " + response.data.Plot);
             console.log("Starring: " + response.data.Actors);
             console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
+
         }
     );
-}
+};
 
 // var spotify = new Spotify(keys.spotify);
