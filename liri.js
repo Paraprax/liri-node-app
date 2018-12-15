@@ -1,5 +1,6 @@
 //dependecies
 var axios = require("axios");
+var Spotify = require('node-spotify-api');
 require("dotenv").config();
 
 //keys
@@ -67,3 +68,12 @@ function searchOMDb() {
 };
 
 // var spotify = new Spotify(keys.spotify);
+
+function searchSpotify() {
+
+    var spotify = new Spotify({
+    id: 1,
+    secret: 1,
+    });
+
+}
