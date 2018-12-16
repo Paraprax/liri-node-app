@@ -14,10 +14,10 @@ switch(input[0]) {
         searchOMDb();
         break;
     case "concert-this":
-        console.log("I'm afraid I can't do that.... yet.")
+        console.log("I'm afraid I can't do that.... yet.");
         break;
     case "spotify-this-song":
-        console.log("I'm afraid I can't do that.... yet.")
+        searchSpotify();
         break;
     case "do-what-it-says":
         console.log("I'm afraid I can't do that.... yet.")
@@ -71,9 +71,27 @@ function searchOMDb() {
 
 function searchSpotify() {
 
-    var spotify = new Spotify({
-    id: 1,
-    secret: 1,
+    var songTitle = ""; // var to be set by user input and submitted to the search method
+    var spotKey = process.env.SPOTIFY_ID; // reference the secret keys in our env file
+    var spotSecret = process.env.SPOTIFY_SECRET;
+
+    var spotify = new Spotify({ //new instance of spotify via constructor
+        id: spotKey,
+        secret: spotSecret,
     });
+
+
+    // if-else setup to use a default song if nothing is input after the song-this command
+    if (input[1] === undefined) {
+        songTitle = "All These Things That I've Done";
+    } else {
+        songTitle = input.slice(1).join(' '); //otherwise the title will be built by joining the rest of the inputs into a string with each item separated by a space
+    }
+    
+    spotify
+    .search({ type: 'track', query: songTitle })
+    .then(function(response) {
+    console.log(response.tracks.items[0].album.artists[0].name);
+  })
 
 }
