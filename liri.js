@@ -93,9 +93,13 @@ function searchSpotify() {
     .then(function(response) {
 
     console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
-    console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
-    console.log("Album: " + response.tracks.items[0].album.name);
+    console.log("SONG TITLE: " + response.tracks.items[0].name);
+    console.log("ARTIST: " + response.tracks.items[0].album.artists[0].name);
+    console.log("ALBUM: " + response.tracks.items[0].album.name);
+    console.log("LISTEN ON SPOTIFY AT: https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
     console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
+
+    
   })
 
 }
