@@ -91,7 +91,11 @@ function searchSpotify() {
     spotify
     .search({ type: 'track', query: songTitle })
     .then(function(response) {
-    console.log(response.tracks.items[0].album.artists[0].name);
+
+    console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
+    console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
+    console.log("Album: " + response.tracks.items[0].album.name);
+    console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
   })
 
 }
