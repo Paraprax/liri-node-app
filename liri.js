@@ -7,6 +7,9 @@ require("dotenv").config();
 //var keys = require("keys.js");
 
 var input = process.argv.slice(2);
+var beginBold = '\033[1m';
+var endBold = '\033[0m';
+
 
 // ~ ~ ~ ~ ~ ~ ~ ~ switch-case for calling functions based on user input: ~ ~ ~ ~ ~ ~
 switch(input[0]) {
@@ -53,14 +56,14 @@ function searchOMDb() {
 
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
             console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
-            console.log("Title: " + response.data.Title);
-            console.log("Release year: " + response.data.Year);
-            console.log("IMDb user rating(out of 10): " + response.data.imdbRating);
-            console.log("RottenTomatoes score(out of 100%): " + response.data.Ratings[1].Value); //<- well this one took a lot of trial and error to figure out how to reference....
-            console.log("Country of production: " + response.data.Country);
-            console.log("Language: " + response.data.Language);
-            console.log("Plot synopsis: " + response.data.Plot);
-            console.log("Starring: " + response.data.Actors);
+            console.log(beginBold + "Title: " + endBold + response.data.Title);
+            console.log(beginBold + "Release year: " + endBold + response.data.Year);
+            console.log(beginBold + "IMDb user rating(out of 10): " + endBold + response.data.imdbRating);
+            console.log(beginBold + "RottenTomatoes score(out of 100%): " + endBold + response.data.Ratings[1].Value); //<- well this one took a lot of trial and error to figure out how to reference....
+            console.log(beginBold + "Country of production: " + endBold + response.data.Country);
+            console.log(beginBold + "Language: " + endBold + response.data.Language);
+            console.log(beginBold + "Plot synopsis: " + endBold + response.data.Plot);
+            console.log(beginBold + "Starring: " + endBold + response.data.Actors);
             console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
 
         }
@@ -93,10 +96,10 @@ function searchSpotify() {
     .then(function(response) {
 
     console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
-    console.log("SONG TITLE: " + response.tracks.items[0].name);
-    console.log("ARTIST: " + response.tracks.items[0].album.artists[0].name);
-    console.log("ALBUM: " + response.tracks.items[0].album.name);
-    console.log("LISTEN ON SPOTIFY AT: https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
+    console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
+    console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
+    console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
+    console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
     console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
 
     
