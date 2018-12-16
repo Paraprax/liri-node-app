@@ -6,8 +6,11 @@ require("dotenv").config();
 //keys
 //var keys = require("keys.js");
 
+//arguments following node keyword and program name become the input string
 var input = process.argv.slice(2);
-var beginBold = '\033[1m';
+
+//code to embolden console.logged characters in the Terminal for user readability
+var beginBold = '\033[1m'; 
 var endBold = '\033[0m';
 
 
