@@ -9,9 +9,10 @@ require("dotenv").config();
 //arguments following node keyword and program name become the input string
 var input = process.argv.slice(2);
 
-//code to embolden console.logged characters in the Terminal for user readability
+//code to embolden certain console.logged words in the Terminal for user readability
 var beginBold = '\033[1m'; 
 var endBold = '\033[0m';
+// unicode emoji lines to frame output-blocks for user readability:
 var concertBumpers = ("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
 var movieBumpers = ("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
 var songBumpers = ("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
@@ -101,12 +102,22 @@ function searchSpotify() {
     .search({ type: 'track', query: songTitle})
     .then(function(response) {
 
-    console.log(songBumpers);
-    console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
-    console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
-    console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
-    console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
-    console.log(songBumpers);
+        if (response.tracks.items[0] === undefined) 
+        {
+            console.log(songBumpers);
+            console.log("\n" + beginBold + songTitle + endBold + "? Sorry, I don't know that song! Maybe if I heard it....");  
+            console.log(songBumpers); 
+                return;
+        } 
+        else 
+        {
+        console.log(songBumpers);
+        console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
+        console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
+        console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
+        console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
+        console.log(songBumpers);
+        }
 
     
   })
@@ -120,7 +131,7 @@ function searchBandsInTown() {
     var bandsID = process.env.BANDS_ID;
 
     if (input[1] === undefined) {
-        artistName = "Coldplay";
+        artistName = "Loverboy";
     } else {
         artistName = input.slice(1).join(" "); //input string with each item separated by a space
     }
@@ -134,7 +145,7 @@ function searchBandsInTown() {
                 return;
             }
 
-            var parsedDate = "";
+            var parsedDate = ""; // format date and time into English
 
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
                 console.log(concertBumpers);
