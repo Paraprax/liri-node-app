@@ -57,10 +57,12 @@ function searchOMDb() {
     axios.get("http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=" + OMDBkey).then(
         function(response) { 
             
-            /* if (error) {
-                console.log("Sorry, we don't know that movie! Are you sure you're spelling it right?");   
+            if (response.data.Title === undefined) {
+                console.log(movieBumpers);
+                console.log("Sorry, I don't know that movie! Have you tried the Lost Films subreddit @ https://www.reddit.com/r/Lost_Films/ ?");
+                console.log(movieBumpers);
                 return;
-            } */
+            }
 
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
             console.log(movieBumpers);
@@ -118,10 +120,7 @@ function searchSpotify() {
         console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
         console.log(songBumpers);
         }
-
-    
   })
-
 }
 
 //'concert-this' command will call:
@@ -172,9 +171,7 @@ function searchBandsInTown() {
                                 );
                     console.log(beginBold + "Concert date: " + endBold + response.data[i].datetime);
                 }
-
                 console.log(concertBumpers);
-
         }
     );
 };
