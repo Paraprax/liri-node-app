@@ -131,9 +131,23 @@ function searchBandsInTown() {
                 return;
             } */
 
+            var parsedDate = "";
+
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
                 console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
-                console.log(response.data);
+                console.log(beginBold + artistName + endBold + "'s next five concerts are:")
+
+                for (var i = 0; i < 5; i++){
+                    console.log("\n"+ (i + 1) + ":");
+                    console.log(beginBold + "Venue: " + endBold + response.data[i].venue.name);
+                    console.log(beginBold + "Location: " + endBold + response.data[i].venue.city 
+                                + ", " + response.data[i].venue.region 
+                                + ", " + response.data[i].venue.country 
+                                + ", " + response.data[i].venue.latitude
+                                + ", " + response.data[i].venue.longitude
+                                );
+                    console.log(beginBold + "Concert date: " + endBold + response.data[i].datetime);
+                }
                 console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
 
         }
