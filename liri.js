@@ -20,7 +20,7 @@ switch(input[0]) {
         searchOMDb();
         break;
     case "concert-this":
-        console.log("I'm afraid I can't do that.... yet.");
+        searchBandsInTown();
         break;
     case "spotify-this-song":
         searchSpotify();
@@ -35,6 +35,7 @@ switch(input[0]) {
 
 //===================== function definitions: =====================================
 
+//'movie-this' command will call:
 function searchOMDb() {
     // vars to build url string for axios:
     var movieTitle = "";
@@ -73,8 +74,7 @@ function searchOMDb() {
     );
 };
 
-// var spotify = new Spotify(keys.spotify);
-
+//'spotify-this-song' command will call:
 function searchSpotify() {
 
     var songTitle = ""; // var to be set by user input and submitted to the search method
@@ -89,13 +89,13 @@ function searchSpotify() {
 
     // if-else setup to use a default song if nothing is input after the song-this command
     if (input[1] === undefined) {
-        songTitle = "All These Things That I've Done";
+        songTitle = "The Sign Ace"; //viable string for returning "The Sign" by Ace Of Base
     } else {
         songTitle = input.slice(1).join(' '); //otherwise the title will be built by joining the rest of the inputs into a string with each item separated by a space
     }
     
     spotify
-    .search({ type: 'track', query: songTitle })
+    .search({ type: 'track', query: songTitle})
     .then(function(response) {
 
     console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
@@ -109,3 +109,33 @@ function searchSpotify() {
   })
 
 }
+
+//'concert-this' command will call:
+function searchBandsInTown() {
+    // vars to build url string for axios:
+    var artistName = "";
+    var bandsID = process.env.BANDS_ID;
+
+    if (input[1] === undefined) {
+        artistName = "Loverboy";
+    } else {
+        artistName = input.slice(1).join(" "); //otherwise the title will be built by joining the rest of the inputs into a string with each item separated by a space
+    }
+
+    //axios request:
+    axios.get("https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=" + bandsID).then(
+        function(response) { 
+            
+            /* if (error) {
+                console.log("Sorry, we don't know that band! Are you sure you're spelling it right?");   
+                return;
+            } */
+
+            //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
+                console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
+                console.log(response.data);
+                console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
+
+        }
+    );
+};
