@@ -12,6 +12,9 @@ var input = process.argv.slice(2);
 //code to embolden console.logged characters in the Terminal for user readability
 var beginBold = '\033[1m'; 
 var endBold = '\033[0m';
+var concertBumpers = ("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
+var movieBumpers = ("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
+var songBumpers = ("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
 
 
 // ~ ~ ~ ~ ~ ~ ~ ~ switch-case for calling functions based on user input: ~ ~ ~ ~ ~ ~
@@ -59,7 +62,7 @@ function searchOMDb() {
             } */
 
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
-            console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
+            console.log(movieBumpers);
             console.log(beginBold + "Title: " + endBold + response.data.Title);
             console.log(beginBold + "Release year: " + endBold + response.data.Year);
             console.log(beginBold + "IMDb user rating(out of 10): " + endBold + response.data.imdbRating);
@@ -68,7 +71,7 @@ function searchOMDb() {
             console.log(beginBold + "Language: " + endBold + response.data.Language);
             console.log(beginBold + "Plot synopsis: " + endBold + response.data.Plot);
             console.log(beginBold + "Starring: " + endBold + response.data.Actors);
-            console.log("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
+            console.log(movieBumpers);
 
         }
     );
@@ -98,12 +101,12 @@ function searchSpotify() {
     .search({ type: 'track', query: songTitle})
     .then(function(response) {
 
-    console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
+    console.log(songBumpers);
     console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
     console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
     console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
     console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
-    console.log("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
+    console.log(songBumpers);
 
     
   })
@@ -117,28 +120,38 @@ function searchBandsInTown() {
     var bandsID = process.env.BANDS_ID;
 
     if (input[1] === undefined) {
-        artistName = "Loverboy";
+        artistName = "Coldplay";
     } else {
-        artistName = input.slice(1).join(" "); //otherwise the title will be built by joining the rest of the inputs into a string with each item separated by a space
+        artistName = input.slice(1).join(" "); //input string with each item separated by a space
     }
 
     //axios request:
     axios.get("https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=" + bandsID).then(
-        function(response) { 
+        function(response, error) { 
             
-            /* if (error) {
-                console.log("Sorry, we don't know that band! Are you sure you're spelling it right?");   
+            if (error) {
+              console.log("Sorry, we don't know that band! Are you sure you're spelling it right?");   
                 return;
-            } */
+            }
 
             var parsedDate = "";
 
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
-                console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
-                console.log(beginBold + artistName + endBold + "'s next five concerts are:")
+                console.log(concertBumpers);
 
-                for (var i = 0; i < 5; i++){
-                    console.log("\n"+ (i + 1) + ":");
+                for (var i = 0; i < 5; i++){ // loop to return data on the first five concerts returned by the app
+
+                    if (response.data[i] === undefined) {
+                        console.log("I'm afraid I can't find any upcoming concerts for " + beginBold + artistName + " " + endBold + "at this time....");   
+                        console.log(concertBumpers);  
+                        return;
+                      }
+
+                    if (i === 0) {
+                        console.log(beginBold + artistName + endBold + "'s next concerts are:[up to five]");
+                    }
+
+                    console.log("\n"+ (i + 1) + ":"); //output result-number will start at "1" for readability
                     console.log(beginBold + "Venue: " + endBold + response.data[i].venue.name);
                     console.log(beginBold + "Location: " + endBold + response.data[i].venue.city 
                                 + ", " + response.data[i].venue.region 
@@ -148,7 +161,8 @@ function searchBandsInTown() {
                                 );
                     console.log(beginBold + "Concert date: " + endBold + response.data[i].datetime);
                 }
-                console.log("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟\n");
+
+                console.log(concertBumpers);
 
         }
     );
