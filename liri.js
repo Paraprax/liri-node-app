@@ -1,7 +1,8 @@
 //dependecies
-var axios = require("axios");
+var axios = require('axios');
 var Spotify = require('node-spotify-api');
-var fs = require("fs");
+var fs = require('fs');
+var moment = require('moment');
 require("dotenv").config();
 
 //keys
@@ -144,8 +145,6 @@ function searchBandsInTown() {
                 return;
             }
 
-            var parsedDate = ""; // format date and time into English
-
             //successful query returns block of console logs with strings formatted for readability(in the terminal, anyway)
                 console.log(concertBumpers);
 
@@ -169,7 +168,8 @@ function searchBandsInTown() {
                                 + ", " + response.data[i].venue.latitude
                                 + ", " + response.data[i].venue.longitude
                                 );
-                    console.log(beginBold + "Concert date: " + endBold + response.data[i].datetime);
+                    var parsedDate = moment(response.data[i].datetime).format('MMMM Do YYYY, h:mm:ss a');; // format date and time into English using 'format' function from the moment.js package
+                    console.log(beginBold + "Concert date: " + endBold + parsedDate); 
                 }
                 console.log(concertBumpers);
         }
