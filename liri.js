@@ -5,7 +5,7 @@ var fs = require("fs");
 require("dotenv").config();
 
 //keys
-//var keys = require("keys.js");
+var keys = require('./keys.js');
 
 //arguments following node keyword and program name become the input string
 var input = process.argv.slice(2);
@@ -18,7 +18,7 @@ var concertBumpers = ("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 
 var movieBumpers = ("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
 var songBumpers = ("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
 
-//call the switch-case when the app is run:
+//call the switch-case function when the app is run:
 liri(); 
 
 //===================== function definitions: =====================================
@@ -45,12 +45,11 @@ function liri() {
 };
 
 
-
 //'movie-this' command will call:
 function searchOMDb() {
     // vars to build url string for axios:
     var movieTitle = "";
-    var OMDBkey = process.env.OMDB_key;
+    var OMDBkey = keys.omdb.key; //key stored in gitignored .env file, ref'd thru keys.js
 
     /* if nothing is entered after the 'movie-this' command, Jaco Van Dormael's criminally-underrated 
     surrealist sci-fi masterpiece 'Mr. Nobody' will be assigned to the movieTitle var by default */
@@ -64,7 +63,7 @@ function searchOMDb() {
     axios.get("http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=" + OMDBkey).then(
         function(response) { 
             
-            if (response.data.Title === undefined) {
+            if (response.data.Title === undefined) { //checks if first item in the return array(in this case, 'Title', is undefined; defaults out with a message if so)
                 console.log(movieBumpers);
                 console.log("Sorry, I don't know that movie! Have you tried the Lost Films subreddit @ https://www.reddit.com/r/Lost_Films/ ?");
                 console.log(movieBumpers);
@@ -91,15 +90,9 @@ function searchOMDb() {
 function searchSpotify() {
 
     var songTitle = ""; // var to be set by user input and submitted to the search method
-    var spotKey = process.env.SPOTIFY_ID; // reference the secret keys in our env file
-    var spotSecret = process.env.SPOTIFY_SECRET;
 
-    var spotify = new Spotify({ //new instance of spotify via constructor
-        id: spotKey,
-        secret: spotSecret,
-    });
-
-
+    var spotify = new Spotify(keys.spotify); //new instance of Spotify via constructor functionality included in the node-spotify-api package
+    
     // if-else setup to use a default song if nothing is input after the song-this command
     if (input[1] === undefined) {
         songTitle = "The Sign Ace"; //viable string for returning "The Sign" by Ace Of Base
@@ -134,7 +127,7 @@ function searchSpotify() {
 function searchBandsInTown() {
     // vars to build url string for axios:
     var artistName = "";
-    var bandsID = process.env.BANDS_ID;
+    var bandsID = keys.concert.id;
 
     if (input[1] === undefined) {
         artistName = "Loverboy";
@@ -158,7 +151,7 @@ function searchBandsInTown() {
 
                 for (var i = 0; i < 5; i++){ // loop to return data on the first five concerts returned by the app
 
-                    if (response.data[i] === undefined) {
+                    if (response.data[i] === undefined) { //default-out if an undefined is returned first, as with the other functions
                         console.log("I'm afraid I can't find any upcoming concerts for " + beginBold + artistName + " " + endBold + "at this time....");   
                         console.log(concertBumpers);  
                         return;
@@ -187,15 +180,15 @@ function doWhat() {
 
     console.log("Retrieving instructions from 'random.txt'....");
 
-    fs.readFile("random.txt", "utf8", function(err, data) {
+    fs.readFile("random.txt", "utf8", function(err, data) { //access the contents of random.txt using the readFile function from the fs package
 
         if (err) {
             return console.log(err);
           }
 
-        input = data.split(",");
+        input = data.split(","); //turn the comma-separated string content from random.txt into an input array readable by node
 
-        liri();
+        liri(); // run the switchcase function using the above assignment of input
         
     });
 }
