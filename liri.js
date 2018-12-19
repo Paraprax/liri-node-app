@@ -1,6 +1,7 @@
 //dependecies
 var axios = require("axios");
 var Spotify = require('node-spotify-api');
+var fs = require("fs");
 require("dotenv").config();
 
 //keys
@@ -17,9 +18,15 @@ var concertBumpers = ("\n🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 🎟 
 var movieBumpers = ("\n🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥 🎥\n");
 var songBumpers = ("\n🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶 🎶\n");
 
+//call the switch-case when the app is run:
+liri(); 
 
-// ~ ~ ~ ~ ~ ~ ~ ~ switch-case for calling functions based on user input: ~ ~ ~ ~ ~ ~
-switch(input[0]) {
+//===================== function definitions: =====================================
+
+// switch-case for calling functions based on user input:
+function liri() {
+
+    switch(input[0]) {
     case "movie-this":
         searchOMDb();
         break;
@@ -30,14 +37,14 @@ switch(input[0]) {
         searchSpotify();
         break;
     case "do-what-it-says":
-        console.log("I'm afraid I can't do that.... yet.")
+        doWhat();
         break;
     default:
       console.log("Please enter a command....")
-}
-// ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~   
+    }
+};
 
-//===================== function definitions: =====================================
+
 
 //'movie-this' command will call:
 function searchOMDb() {
@@ -78,7 +85,7 @@ function searchOMDb() {
 
         }
     );
-};
+}
 
 //'spotify-this-song' command will call:
 function searchSpotify() {
@@ -113,12 +120,12 @@ function searchSpotify() {
         } 
         else 
         {
-        console.log(songBumpers);
-        console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
-        console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
-        console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
-        console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
-        console.log(songBumpers);
+            console.log(songBumpers);
+            console.log(beginBold + "Song title: " + endBold + response.tracks.items[0].name);
+            console.log(beginBold + "Artist: " + endBold + response.tracks.items[0].album.artists[0].name);
+            console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
+            console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
+            console.log(songBumpers);
         }
   })
 }
@@ -175,3 +182,20 @@ function searchBandsInTown() {
         }
     );
 };
+
+function doWhat() {
+
+    console.log("Retrieving instructions from 'random.txt'....");
+
+    fs.readFile("random.txt", "utf8", function(err, data) {
+
+        if (err) {
+            return console.log(err);
+          }
+
+        input = data.split(",");
+
+        liri();
+        
+    });
+}
