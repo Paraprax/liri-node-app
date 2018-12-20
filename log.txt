@@ -1,10 +1,22 @@
-
-Spotify search returned: The Spirit Of Radio, Rush
-OMDb search returned: Blade Runner, 1982
-Bands In Town search returned: Loverboy concert at Orleans Showroom, January 19th 2019, 9:00:00 pm
+Previous searches:
 OMDb search returned: Mr. Nobody, 2009
-Spotify search returned: Partyman, Prince
-Spotify search returned: The Sign, Ace of Base
 OMDb search returned: The Dark Backward, 1991
 OMDb search returned: Wet Hot American Summer, 2001
-Bands In Town search returned: Pale Waves concert at SSE Arena, January 9th 2019, 7:00:03 pm
+Spotify search returned: The Sign, Ace of Base
+Spotify search returned: The Spirit Of Radio, Rush
+Spotify search returned: Partyman, Prince
+Bands In Town search returned: Loverboy concert at Orleans Showroom, January 19th 2019, 9:00:00 pm
+Bands In Town search returned: Elton John concert at Taco Bell Arena, January 11th 2019, 8:00:00 pm
+Spotify search returned: Blade Runner Blues, Vangelis
+Spotify search returned: I Want It That Way, Backstreet Boys
+OMDb search returned: Edge of Tomorrow, 2014
+OMDb search returned: Clean and Sober, 1988
+Spotify search returned: The Painted Desert, 10,000 Maniacs
+Spotify search returned: Desert Tribe, The High Dials
+Spotify search returned: Desert Tribe, The High Dials
+Spotify search returned: Strong Hand - Bonus Track, CHVRCHES
+Spotify search returned: When the Night is Over, Lord Huron
+Spotify search returned: The Way You Remember Me, St. Lucia
+Spotify search returned: Thank u, Tracy Harris
+Bands In Town search returned: Loverboy concert at Orleans Showroom, January 19th 2019, 9:00:00 pm
+Bands In Town search returned: The Beach Boys concert at Eccles Theater, December 27th 2018, 7:00:00 pm

@@ -24,3 +24,6 @@ If nothing is entered the after the **"-this"** command, the app will search for
 
 Some of the basic info returned from each successful search is automatically appended to the included "log.txt" film each time a search is run.
 
+Watch a video of liri.js in action [here!](https://drive.google.com/file/d/1r9R-tQCvn224tjDXiUCYia0OdE0ilKR9/view)
+
+See screenshots of examples of liri's output [here!](https://drive.google.com/drive/folders/1zaVS4VwpYCaRgNOHE530fRTKodbD5GEe)
