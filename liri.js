@@ -83,6 +83,7 @@ function searchOMDb() {
             console.log(beginBold + "Starring: " + endBold + response.data.Actors);
             console.log(movieBumpers);
 
+            logFile("\nOMDb search returned: " + response.data.Title + ", " + response.data.Year); //pass some of the data as an argument to logFile function which will add it to log.txt
         }
     );
 }
@@ -120,6 +121,8 @@ function searchSpotify() {
             console.log(beginBold + "Album: " + endBold + response.tracks.items[0].album.name);
             console.log(beginBold + "Listen on Spotify at: " + endBold + "https://open.spotify.com/track/" + response.tracks.items[0].uri.substring(14,36)); //substring method used to target specific 22-char id part of link-object, which is concat'd into a URL the user can copy/paste into a browser
             console.log(songBumpers);
+
+            logFile("\nSpotify search returned: " + response.tracks.items[0].name + ", " + response.tracks.items[0].album.artists[0].name);
         }
   })
 }
@@ -158,6 +161,7 @@ function searchBandsInTown() {
 
                     if (i === 0) {
                         console.log(beginBold + artistName + endBold + "'s next concerts are:[up to five]");
+                        logFile("\nBands In Town search returned: " + artistName + " concert at " + response.data[i].venue.name + ", " + moment(response.data[i].datetime).format('MMMM Do YYYY, h:mm:ss a'));
                     }
 
                     console.log("\n"+ (i + 1) + ":"); //output result-number will start at "1" for readability
@@ -190,5 +194,17 @@ function doWhat() {
 
         liri(); // run the switchcase function using the above assignment of input
         
+    });
+}
+
+function logFile(info) {
+
+    fs.appendFile('log.txt', info, function(err) {
+
+        if (err) {
+            console.log(err);
+            return;
+        }
+    
     });
 }
